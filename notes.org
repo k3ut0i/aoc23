@@ -1,0 +1,9 @@
+* DONE Day 01
+** DONE Part1
+- [X] f: iterate over characters in a string and get the number. Did this with regex capture.
+- [X] fold f [strings] 0. Did this with array.reduce
+
+** DONE Part2
+I'm stuck here. I used string.replace to convert all instances of words to numerals, but I am getting the wrong answer. I think the problem is with numbers that share spellings _eightwo_ will be _8wo_ and be calibrated to 88. But it might actually be _82_ and has calibrated value of 82.
+
+Solved this in raku with ~:exhaustive~ matching. After getting all the matches I just replaced the starting character of the match with the digit.
