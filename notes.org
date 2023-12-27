@@ -12,3 +12,16 @@ Solved this in raku with ~:exhaustive~ matching. After getting all the matches I
 Use raku grammars for parsing.
 The return value from grammar is somekind of match/map. I should be able to convert it internally to a better data structure.
 
+* DONE Day 03 - Gear Ratios
+Regex format seems a bit different.
+- Negating character classes had <-[]>
+- range [0-9] is dropped infavor of [0..9]
+- named captures ~/$<name>=(\d+)/~ to capture a number
+- my regex R, named regexes for future use
+
+List utilities
+- unique, :with function
+- grep, to filter elements
+- push @a.Slip, to push multiple elements at a time.
+  
+Mostly a parsing and data management problem.
