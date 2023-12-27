@@ -25,3 +25,8 @@ List utilities
 - push @a.Slip, to push multiple elements at a time.
   
 Mostly a parsing and data management problem.
+
+* DONE Day 04 - Scratchcards
+- Good use of grammars and actions to get better data structures after parsing.
+- got used to raku hashes
+A recursive enumeration.
