@@ -30,3 +30,14 @@ Mostly a parsing and data management problem.
 - Good use of grammars and actions to get better data structures after parsing.
 - got used to raku hashes
 A recursive enumeration.
+
+* TODO Day 05 - If you give a seed a fertilizer
+** DONE Part1 
+I encoded the whole almanac file in a ~grammar~ \o/. The actual logic to trace through the data is simple when my data is in desired format.
+** TODO Part2
+Since there are a whole lot of seeds, tracing each one individually will be quite inefficient. The maps are piecewise linear, so each range will map to a set of new ranges. While each step will increase the number of ranges in play, their number seems to be a lot less than individual seeds.
+
++Just thought of something. Since all maps are linear with positive slopes (= 1), the smallest destination must be with smallest source. So even after many maps, the smallest seed should give the smallest location.+ This was wrong, as the maps are piece wise linear, but the breaks can introduce negative slopes.
+
+1. First I need to _complete_ the maps. Introduce the empty spaces as identity maps.
+2. mapping should act on intervals, rather than single points.
