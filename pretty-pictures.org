@@ -1,0 +1,13 @@
+* Pretty visuals and plots from input data in AOC 2023
+
+** TODO Day05
+- [X] plots for each map
+- [ ] how the seed ranges split in each map.
+
+#+begin_src R :results value file :exports both
+source("utils/day05-plots.R")
+plotall("tmp-day05", "images/day05.png")
+#+end_src
+
+#+RESULTS:
+[[file:images/day05.png]]

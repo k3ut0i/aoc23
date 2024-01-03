@@ -3,17 +3,49 @@ class RangeMap {
     has Int $.src;
     has Int $.len;
 
-    method is-in(Int $x --> Bool) {
-        return ($!src <= $x < $!src + $!len);
+    method is-in(Int $x --> Bool) { return ($!src <= $x < $!src + $!len); }
+
+    method maps(Int $x --> Int) { return $!des + $x - $!src; }
+
+    method src-max ( --> Int ) { return $!src + $!len - 1; }
+
+    method des-max ( --> Int ) { return $!des + $!len - 1; }
+
+    method r-maps(Range:D $interval --> Range:_) {
+        my $is = intersection($interval, Range.new($!src, self.src-max));
+        if $is.defined {
+            return Range.new(self.maps($is.min), self.maps($is.max));
+        } else {
+            return Range;
+        }
     }
 
-    method maps(Int $x --> Int) {
-        return $!des + $x - $!src;
+    method raku() {
+        # src->des(len)
+        return $!src ~ '->' ~ $!des ~ '(' ~ $!len ~ ')';
     }
 }
 
-multi sub infix:<cmp>(RangeMap $a, RangeMap $b){
-    return ($a.src cmp $b.src);
+sub intersection(Range:D $r1, Range:D $r2 --> Range:_){
+    my Bool $r1small = $r1.min <= $r2.min;
+    my $a = $r1small ?? $r1 !! $r2;
+    my $b = $r1small ?? $r2 !! $r1;
+    if ($a.max < $b.min) {
+        return Range;
+    } elsif ($a.max >= $b.max) {
+        return $b;
+    } else {
+        return Range.new($b.min, $a.max);
+    }
+}
+
+sub defined-map(@seq, &block){
+    my @result;
+    for @seq -> $s {
+        my $r = block($s);
+        if $r.defined { @result.push($r); }
+    }
+    return @result;
 }
 
 class AlmanacMap {
@@ -21,11 +53,66 @@ class AlmanacMap {
     has Str $.from;
     has Str $.to;
 
+    method new(:$from, :$to, :$ranges) {
+        return self.bless(from => $from, to => $to,
+                          ranges => $ranges.sort: *.src).expand-ids();
+    }
+
+    method expand-ids() {
+        my @new-ranges;
+        my $i = 0;
+        for @!ranges -> $rm {
+            given ($rm.src cmp $i) {
+                when Less {
+                    die "This shouldn't be possible $rm.src, $i";
+                }
+                when Same { @new-ranges.push($rm); $i = $rm.src + $rm.len; }
+                when More {
+                    @new-ranges.push(RangeMap.new(src => $i, des => $i,
+                                                  len => $rm.src - $i));
+                    @new-ranges.push($rm);
+                    $i = $rm.src + $rm.len;
+                }
+            }
+        }
+        @!ranges = @new-ranges;
+        return self;
+    }
+
+    method find_des_of(RangeMap:D $interval) {
+        my @applicable-ranges;
+        for @!ranges -> $rm { # XXX: this can get efficient by binary search
+            my Bool $contains = ($interval.min <= $rm.src and $rm.src-max() <= $interval.max);
+            my Bool $crosses = ($rm.src <= $interval.min <= $rm.src-max() or $rm.src <= $interval.max <= $rm.src-max());
+            if  $contains or $crosses {
+                @applicable-ranges.push($rm);
+            }
+        }
+        return defined-map(@applicable-ranges, *.r-maps($interval));
+    }
+
+    method dump_map($fh){
+        $fh.say("$($!from)\t$($!to)");
+        for @!ranges -> $rm {
+            $fh.say("$($rm.src)\t$($rm.des)\n$($rm.src-max)\t$($rm.des-max)");
+        }
+        $fh.print-nl;
+    }
 }
 
 class Almanac {
     has @.seeds;
     has %.src-maps;
+
+    method dump() {
+        constant $tmp_dir_name = "tmp-day05";
+        unless ($tmp_dir_name.IO.e) { mkdir $tmp_dir_name; }
+        for %!src-maps.values -> $m {
+            my $fh = open :w, "$tmp_dir_name/$($m.from)-$($m.to).data";
+            $m.dump_map($fh);
+            close $fh;
+        }
+    }
 }
 
 grammar AlmanacFile {
@@ -100,4 +187,5 @@ sub MAIN($file){
         if $min_location > $loc { $min_location = $loc; }
     }
     say $min_location;
+    $g.dump();
 }

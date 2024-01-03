@@ -39,5 +39,6 @@ Since there are a whole lot of seeds, tracing each one individually will be quit
 
 +Just thought of something. Since all maps are linear with positive slopes (= 1), the smallest destination must be with smallest source. So even after many maps, the smallest seed should give the smallest location.+ This was wrong, as the maps are piece wise linear, but the breaks can introduce negative slopes.
 
-1. First I need to _complete_ the maps. Introduce the empty spaces as identity maps.
-2. mapping should act on intervals, rather than single points.
+1. [X] First I need to _complete_ the maps. Introduce the empty spaces as identity maps.
+2. [X] mapping should act on intervals, rather than single points.
+3. [ ] propagate this mapping a sequence of intervals.
