@@ -6,7 +6,7 @@
 
 #+begin_src R :results value file :exports both
 source("utils/day05-plots.R")
-plotall("tmp-day05", "images/day05.png")
+plotall("day05/tmp-day05", "images/day05.png")
 #+end_src
 
 #+RESULTS:
