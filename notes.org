@@ -42,3 +42,6 @@ Since there are a whole lot of seeds, tracing each one individually will be quit
 1. [X] First I need to _complete_ the maps. Introduce the empty spaces as identity maps.
 2. [X] mapping should act on intervals, rather than single points.
 3. [ ] propagate this mapping a sequence of intervals.
+
+* DONE Day 06 - Wait for It
+a Parabola - quadratic equation.
