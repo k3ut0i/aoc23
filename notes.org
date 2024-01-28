@@ -45,3 +45,21 @@ Since there are a whole lot of seeds, tracing each one individually will be quit
 
 * DONE Day 06 - Wait for It
 a Parabola - quadratic equation.
+
+* TODO Day 07 - Camel Cards
+** DONE Part1
+I'm having trouble with sorting the cards. A simple dictionary sort, first one type and then on strings should have given me the answer. BUT the ~.sort~ function is messing me up somehow.
+I somehow fixed this after using sort with ~{.type, .estr}~ sorting. Unsure where the actual problem was.
+** TODO Part2
+Joke upgrade strategy is remaining.
+- I should promote the type of hand I have. Need a accurate strategy for this.
+  + high-card -> one-pair.
+  + one-pair -> three-of.
+  + two-pair -> four-of(if one of the pairs is J) else full-house.
+  + three-of -> four-of
+  + full-house -> five-of
+  + four-of -> five-of
+  + five-of -> five-of
+- I should replace all occurances of _J_ with _1_ in the encoded string
+
+Mapping to estr was a pretty smart solution for part1, it was easy to use that to work part2.
