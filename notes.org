@@ -46,11 +46,11 @@ Since there are a whole lot of seeds, tracing each one individually will be quit
 * DONE Day 06 - Wait for It
 a Parabola - quadratic equation.
 
-* TODO Day 07 - Camel Cards
+* DONE Day 07 - Camel Cards
 ** DONE Part1
 I'm having trouble with sorting the cards. A simple dictionary sort, first one type and then on strings should have given me the answer. BUT the ~.sort~ function is messing me up somehow.
 I somehow fixed this after using sort with ~{.type, .estr}~ sorting. Unsure where the actual problem was.
-** TODO Part2
+** DONE Part2
 Joke upgrade strategy is remaining.
 - I should promote the type of hand I have. Need a accurate strategy for this.
   + high-card -> one-pair.
@@ -63,3 +63,13 @@ Joke upgrade strategy is remaining.
 - I should replace all occurances of _J_ with _1_ in the encoded string
 
 Mapping to estr was a pretty smart solution for part1, it was easy to use that to work part2.
+
+* TODO Day 08 - Haunted Wasteland
+** DONE Part1
+Simple graph traversal.
+** TODO Part2
+Simple traversal is taking too long.
+- Since there are no terminal nodes, after a while we just start going in loops.
+- So for any starting point we have cycle with a starting head path.
+- By traversing, we can find this (head, cycle) sequences for each starting point.
+- Now given the (head, cycle) for each point, we have to figure out the the minimum steps needed to get all of them.

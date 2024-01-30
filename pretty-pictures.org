@@ -11,3 +11,8 @@ plotall("day05/tmp-day05", "images/day05.png")
 
 #+RESULTS:
 [[file:images/day05.png]]
+
+** Day08
+I thought there will be multiple end points for each input. When I first saw this, it seemed a simple matter of multiplying the 6 periods for each of these disjoint components, but then I remembered that traversal is dependent on the input directions. So we can still have multiple period intervals for each input. 
+
+[[file:images/day08-2.png]]
